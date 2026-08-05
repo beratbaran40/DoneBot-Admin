@@ -94,6 +94,14 @@ export const tr: Record<TKey, string> = {
   responseTokens: 'Yanıt token (7g)',
   avgLatency: 'Ortalama gecikme (7g)',
 
+  chatRequestsPlain: 'İstek',
+  chatUsersPlain: 'Tekil kullanıcı',
+  chatErrorsPlain: 'Hata',
+  chatRefusalsPlain: 'Red',
+  chatErrorRatePlain: 'Hata oranı',
+  promptTokensPlain: 'İstem token',
+  responseTokensPlain: 'Yanıt token',
+
   sectionModeration: 'Moderasyon',
   openChatReports: 'Açık yapay zekâ şikayeti',
   openContentReports: 'Açık içerik şikayeti',

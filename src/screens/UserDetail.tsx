@@ -124,11 +124,17 @@ export function UserDetail() {
 
       <Section title={t('chatUsage30d')}>
         <div className="grid">
-          <Stat label={t('chatRequests7d')} value={user.chatUsage30d.requests} />
-          <Stat label={t('chatErrorRate')} value={user.chatUsage30d.errors} />
-          <Stat label={t('chatRefusalRate')} value={user.chatUsage30d.refusals} />
-          <Stat label={t('promptTokens')} value={user.chatUsage30d.promptTokens} />
-          <Stat label={t('responseTokens')} value={user.chatUsage30d.responseTokens} />
+          {/* These are thirty-day figures and counts, not seven-day rates — the section heading carries
+              the window, so the labels must not contradict it. */}
+          <Stat label={t('chatRequestsPlain')} value={user.chatUsage30d.requests} />
+          <Stat
+            label={t('chatErrorsPlain')}
+            value={user.chatUsage30d.errors}
+            tone={user.chatUsage30d.errors > 0 ? 'warn' : 'default'}
+          />
+          <Stat label={t('chatRefusalsPlain')} value={user.chatUsage30d.refusals} />
+          <Stat label={t('promptTokensPlain')} value={user.chatUsage30d.promptTokens} />
+          <Stat label={t('responseTokensPlain')} value={user.chatUsage30d.responseTokens} />
         </div>
       </Section>
 

@@ -104,6 +104,16 @@ export const en = {
   responseTokens: 'Response tokens (7d)',
   avgLatency: 'Average latency (7d)',
 
+  // Window-free labels, for sections whose heading already states the period. Using the "(7d)" labels
+  // beside thirty-day figures was a quiet lie about what the numbers covered.
+  chatRequestsPlain: 'Requests',
+  chatUsersPlain: 'Unique users',
+  chatErrorsPlain: 'Errors',
+  chatRefusalsPlain: 'Refusals',
+  chatErrorRatePlain: 'Error rate',
+  promptTokensPlain: 'Prompt tokens',
+  responseTokensPlain: 'Response tokens',
+
   // overview — moderation
   sectionModeration: 'Moderation',
   openChatReports: 'Open AI reports',

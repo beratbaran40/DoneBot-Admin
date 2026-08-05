@@ -152,19 +152,21 @@ export function Ops() {
         </div>
       </Section>
 
-      <Section title={t('sectionChat')}>
+      {/* The heading states the window; the labels inside stay window-free so they cannot disagree with
+          it. /admin/ops/chat-usage defaults to thirty days, which is the useful span for cost. */}
+      <Section title={t('chatUsage30d')}>
         {usage.data && (
           <div className="grid">
-            <Stat label={t('chatRequests7d')} value={usage.data.requests} />
-            <Stat label={t('chatUsers7d')} value={usage.data.uniqueUsers} />
+            <Stat label={t('chatRequestsPlain')} value={usage.data.requests} />
+            <Stat label={t('chatUsersPlain')} value={usage.data.uniqueUsers} />
             <Stat
-              label={t('chatErrorRate')}
+              label={t('chatErrorRatePlain')}
               value={usage.data.requests === 0 ? null : usage.data.errors / usage.data.requests}
               format="percent"
               tone={usage.data.errors > 0 ? 'warn' : 'good'}
             />
-            <Stat label={t('promptTokens')} value={usage.data.promptTokens} />
-            <Stat label={t('responseTokens')} value={usage.data.responseTokens} />
+            <Stat label={t('promptTokensPlain')} value={usage.data.promptTokens} />
+            <Stat label={t('responseTokensPlain')} value={usage.data.responseTokens} />
           </div>
         )}
       </Section>
