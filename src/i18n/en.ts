@@ -25,6 +25,9 @@ export const en = {
   signInFallbackHint: 'Password sign-in is the break-glass path if Google is unavailable.',
   notAuthorised: 'This account is not an administrator.',
   notAuthorisedHint: 'Signed in successfully, but this account may not use the panel.',
+  signedInAs: 'Signed in as',
+  notAuthorisedChecklist:
+    'All three must hold: role is ADMIN, status is ACTIVE, and this exact address is on the server allowlist.',
   signInFailed: 'Sign-in failed. Check the email and password.',
   googleUnavailable: 'Google sign-in could not load.',
 

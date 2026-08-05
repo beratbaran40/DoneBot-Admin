@@ -21,6 +21,9 @@ export const tr: Record<TKey, string> = {
   signInFallbackHint: 'Şifreyle giriş, Google kullanılamadığında devreye giren yedek yoldur.',
   notAuthorised: 'Bu hesap yönetici değil.',
   notAuthorisedHint: 'Giriş başarılı, ancak bu hesap paneli kullanamaz.',
+  signedInAs: 'Giriş yapılan hesap',
+  notAuthorisedChecklist:
+    'Üçü birden gerekli: rol ADMIN, durum ACTIVE ve tam olarak bu adresin sunucudaki izin listesinde olması.',
   signInFailed: 'Giriş başarısız. E-posta ve şifreyi kontrol et.',
   googleUnavailable: 'Google girişi yüklenemedi.',
 

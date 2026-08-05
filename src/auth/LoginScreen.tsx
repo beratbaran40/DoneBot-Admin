@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { api } from '../api/client'
 import { useAuth } from './AuthContext'
 import { useT } from '../i18n'
 import { LocaleSwitch } from '../components/LocaleSwitch'
@@ -66,6 +67,51 @@ function loadGoogleScript(): Promise<void> {
   })
 }
 
+/**
+ * Shown when the credentials were fine but the account may not use the panel.
+ *
+ * It names the address that signed in, which the first version did not. Without it the screen states a
+ * fact the reader cannot act on: with several Google accounts in one browser, "this account" is exactly
+ * the thing in question, and the difference between the address you meant to use and the one the
+ * picker defaulted to is invisible.
+ *
+ * The address comes from /users/me — an ordinary endpoint the token is already good for, since the
+ * rejection came from the admin gate rather than from authentication.
+ */
+function NotAuthorised({ onSignOut }: { onSignOut: () => void }) {
+  const { t } = useT()
+  const [email, setEmail] = useState<string | null>(null)
+
+  useEffect(() => {
+    api<{ email: string }>('/users/me')
+      .then((user) => setEmail(user.email))
+      .catch(() => setEmail(null))
+  }, [])
+
+  return (
+    <div className="center">
+      <div className="card stack">
+        <h1>{t('notAuthorised')}</h1>
+        <p className="subtle" style={{ margin: 0 }}>
+          {t('notAuthorisedHint')}
+        </p>
+        {email && (
+          <p style={{ margin: 0 }}>
+            <span className="subtle">{t('signedInAs')}: </span>
+            <strong className="mono">{email}</strong>
+          </p>
+        )}
+        <p className="subtle" style={{ margin: 0 }}>
+          {t('notAuthorisedChecklist')}
+        </p>
+        <button className="btn" onClick={onSignOut}>
+          {t('signOut')}
+        </button>
+      </div>
+    </div>
+  )
+}
+
 export function LoginScreen() {
   const { t } = useT()
   const { status, signInWithPassword, signInWithGoogle, signOut } = useAuth()
@@ -113,17 +159,7 @@ export function LoginScreen() {
   }, [signInWithGoogle, t])
 
   if (status === 'forbidden') {
-    return (
-      <div className="center">
-        <div className="card stack" style={{ maxWidth: 380 }}>
-          <h1>{t('notAuthorised')}</h1>
-          <p className="subtle">{t('notAuthorisedHint')}</p>
-          <button className="btn" onClick={signOut}>
-            {t('signOut')}
-          </button>
-        </div>
-      </div>
-    )
+    return <NotAuthorised onSignOut={signOut} />
   }
 
   const onSubmit = (event: React.FormEvent) => {
