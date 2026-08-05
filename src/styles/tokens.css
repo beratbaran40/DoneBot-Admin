@@ -1,0 +1,106 @@
+/*
+ * Brand tokens copied verbatim from the DoneBot landing page
+ * (ToDoBackend/src/main/resources/static/index.html), including its dark-mode block.
+ *
+ * Copied rather than reinvented so the panel reads as part of the same product without anyone having
+ * to maintain a second palette. If the landing page's palette ever changes, this is the file to sync.
+ */
+:root {
+  --bg: #f8f9fc;
+  --fg: #090e23;
+  --muted: #717171;
+  --primary: #4566ec;
+  /*
+   * Ink for text sitting ON --primary. It is not always white: in dark mode --primary is a light
+   * lavender (a token meant for accents and links), and white-on-lavender was genuinely hard to read on
+   * the primary button — caught by looking at a screenshot, not by any check.
+   */
+  --on-primary: #ffffff;
+  --accent: #1c3082;
+  --soft-pink: #f5d3bb;
+  --card: #edf4ff;
+  --card-border: #a9baff;
+  --surface: #fffaf0;
+  --shadow: 0 4px 14px rgba(69, 102, 236, 0.1);
+  --shadow-soft: 0 2px 8px rgba(69, 102, 236, 0.06);
+  --radius-card: 16px;
+  --radius-pill: 999px;
+
+  /* Panel-only semantics. Red and green mean exactly one thing each, everywhere. */
+  --danger: #c0392b;
+  --danger-soft: #f6e1e0;
+  --success: #2f7d4f;
+  --success-soft: #e4efe7;
+  --warn: #a86b00;
+  --warn-soft: #fdf0d8;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+
+  /*
+   * Chart series colours, assigned in fixed order and never cycled.
+   *
+   * Not chosen by eye: this exact sequence was run through the palette validator against the light
+   * surface and passes the lightness band, chroma floor, colour-vision-deficiency separation,
+   * normal-vision separation and 3:1 contrast checks. Reordering them can break it — the checks are
+   * on *adjacent* pairs, and an earlier ordering failed on a purple/magenta pair that this one avoids.
+   *
+   * Charts are drawn as small multiples with one series each, so identity comes from each chart's own
+   * title rather than from colour — which is also what makes the residual CVD warning acceptable.
+   */
+  --series-1: #4566ec;
+  --series-2: #a03080;
+  --series-3: #1c7c54;
+  --series-4: #b5651d;
+  --series-5: #7a4fcf;
+
+  --grid: rgba(9, 14, 35, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /*
+     * Dark is a separate selection, not a flip. The light steps sit too dark against #0F1116 — the
+     * magenta lands at 2.9:1, under the 3:1 floor — so these are re-stepped and re-validated against
+     * the dark surface.
+     */
+    --series-1: #6e88f2;
+    --series-2: #c05c9e;
+    --series-3: #35a06b;
+    --series-4: #cc7f33;
+    --series-5: #9781e6;
+
+    --grid: rgba(236, 236, 236, 0.1);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1116;
+    --fg: #ececec;
+    --muted: #9ca3af;
+    --primary: #a9baff;
+    --on-primary: #0f1116;
+    --accent: #c7d0ff;
+    --soft-pink: #3d2820;
+    --card: #1a1d24;
+    --card-border: #3d6a9e;
+    --surface: #16171b;
+    --shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    --danger: #ff6b5b;
+    --danger-soft: #33201e;
+    --success: #6ee7a0;
+    --success-soft: #16281d;
+    --warn: #f0c060;
+    --warn-soft: #2c2415;
+  }
+}

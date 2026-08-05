@@ -1,0 +1,344 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--primary);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ---- layout ------------------------------------------------------------------------------------ */
+
+.shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100%;
+}
+
+.shell__main {
+  padding: var(--space-4);
+  /* Room for the mobile tab bar, plus the home-indicator area on iOS. */
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .shell {
+    grid-template-columns: 220px 1fr;
+  }
+  .shell__main {
+    padding: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+}
+
+/* ---- navigation -------------------------------------------------------------------------------- */
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background: var(--surface);
+  border-top: 1px solid var(--card-border);
+  padding: var(--space-2) 0 calc(var(--space-2) + env(safe-area-inset-bottom));
+  z-index: 10;
+}
+
+.nav__item {
+  flex: 1;
+  text-align: center;
+  padding: var(--space-2) var(--space-1);
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+}
+
+.nav__item--active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+@media (min-width: 900px) {
+  .nav {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--space-1);
+    border-top: none;
+    border-right: 1px solid var(--card-border);
+    padding: var(--space-5) var(--space-3);
+  }
+  .nav__item {
+    flex: 0;
+    text-align: left;
+    font-size: 14px;
+    padding: var(--space-3) var(--space-4);
+  }
+  .nav__item--active {
+    background: var(--card);
+  }
+}
+
+.nav__brand {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .nav__brand {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 0 var(--space-4) var(--space-5);
+    color: var(--fg);
+  }
+}
+
+/* ---- cards ------------------------------------------------------------------------------------- */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-soft);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.stat__label {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 var(--space-1);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stat__value {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  /* Tabular figures stop a refreshing number from shifting the layout under the cursor. */
+  font-variant-numeric: tabular-nums;
+}
+
+.stat__hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin: var(--space-1) 0 0;
+}
+
+/* ---- typography -------------------------------------------------------------------------------- */
+
+h1 {
+  font-size: 22px;
+  margin: 0 0 var(--space-1);
+}
+
+h2 {
+  font-size: 16px;
+  margin: var(--space-6) 0 var(--space-3);
+}
+
+.subtle {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* ---- controls ---------------------------------------------------------------------------------- */
+
+.btn {
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  color: var(--fg);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
+  font-size: 14px;
+}
+
+.btn:hover {
+  border-color: var(--primary);
+}
+
+.btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn--danger {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input {
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+  color: var(--fg);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
+  font-size: 14px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* ---- badges ------------------------------------------------------------------------------------ */
+
+.badge {
+  display: inline-block;
+  border-radius: var(--radius-pill);
+  padding: 2px var(--space-3);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge--ok {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.badge--bad {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.badge--warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.badge--muted {
+  background: var(--bg);
+  color: var(--muted);
+}
+
+/* ---- tables ------------------------------------------------------------------------------------ */
+
+.table-wrap {
+  /* Wide content scrolls inside its own box; the page itself must never scroll sideways. */
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--card-border);
+  white-space: nowrap;
+}
+
+th {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---- banners ----------------------------------------------------------------------------------- */
+
+.banner {
+  border-radius: var(--radius-card);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  font-size: 14px;
+}
+
+.banner--bad {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.banner--warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+/*
+ * Flex, not `display: grid; place-items: center`.
+ *
+ * With grid centring, the implicit column sizes to the content's max-content width. The Google sign-in
+ * button renders as a fixed-width iframe, so on a narrow phone the column grew past the viewport and
+ * the centred card hung off both edges — a horizontal scroll on the one screen that has to work on a
+ * phone. Flex centring with a max-width child cannot do that.
+ */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: var(--space-4);
+}
+
+.center > * {
+  width: 100%;
+  max-width: 380px;
+  /* Lets the flex item shrink below its content's intrinsic width instead of overflowing. */
+  min-width: 0;
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-3);
+}
