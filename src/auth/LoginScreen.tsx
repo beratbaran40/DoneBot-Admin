@@ -3,7 +3,29 @@ import { useAuth } from './AuthContext'
 import { useT } from '../i18n'
 import { LocaleSwitch } from '../components/LocaleSwitch'
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined
+/**
+ * The web OAuth client the backend already validates against — the same one the Android app passes as
+ * serverClientId.
+ *
+ * Hard-coded rather than required from the environment, because an OAuth client id is a public
+ * identifier by design: it is sent to every browser that loads this page, and it already sits in
+ * `google-services.json` in the public DoneBot repository. The security boundary is the Authorized
+ * JavaScript origins list in the Google console, not secrecy of this string. Making deployment depend
+ * on it bought nothing and cost three silent outages — first the variable was missing, then it was
+ * scoped to the wrong environment, then it was pasted truncated.
+ *
+ * An override is still honoured, but only if it *looks* like a client id. A truncated paste is
+ * otherwise accepted happily here and rejected by Google with `invalid_client` — an error that appears
+ * only after the user has already picked their account, with nothing in the panel to explain it.
+ */
+const DEFAULT_GOOGLE_CLIENT_ID = '348288029176-tqsrb8v3rn2pghkhc19rfva89q7q9vis.apps.googleusercontent.com'
+const CLIENT_ID_SUFFIX = '.apps.googleusercontent.com'
+
+const configuredClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined
+const GOOGLE_CLIENT_ID = configuredClientId?.trim().endsWith(CLIENT_ID_SUFFIX)
+  ? configuredClientId.trim()
+  : DEFAULT_GOOGLE_CLIENT_ID
+
 const GSI_SRC = 'https://accounts.google.com/gsi/client'
 
 interface GoogleCredentialResponse {
