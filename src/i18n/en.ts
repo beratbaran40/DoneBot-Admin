@@ -93,7 +93,22 @@ export const en = {
   avgMembers: 'Average members',
   pendingInvites: 'Pending invites',
 
+  // overview — pomodoro
+  sectionPomodoro: 'Pomodoro',
+  focusTimeToday: 'Focus time today',
+  focusTime7d: 'Focus time (7d)',
+  sessionsCompleted7d: 'Sessions completed (7d)',
+  sessionCompletionRate: 'Session completion rate (7d)',
+  sessionCompletionRateHint: 'Optimistic — sessions lost to a killed app leave no record',
+  pomodoroUsers7d: 'Pomodoro users (7d)',
+  pomodoroRuns7d: 'Runs started (7d)',
+  avgFocusPerUser7d: 'Avg focus per user (7d)',
+
   // overview — chat
+  // shared — compact duration units, for Stat format='minutes'
+  durationHoursShort: 'h',
+  durationMinutesShort: 'm',
+
   sectionChat: 'DoneBot',
   chatRequestsToday: 'Requests today',
   chatRequests7d: 'Requests (7d)',
@@ -113,6 +128,12 @@ export const en = {
   chatErrorRatePlain: 'Error rate',
   promptTokensPlain: 'Prompt tokens',
   responseTokensPlain: 'Response tokens',
+
+  focusTimePlain: 'Focus time',
+  sessionsCompletedPlain: 'Sessions completed',
+  sessionsStartedPlain: 'Sessions started',
+  runsPlain: 'Runs',
+  pomodoro30d: 'Pomodoro (30d)',
 
   // overview — moderation
   sectionModeration: 'Moderation',

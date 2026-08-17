@@ -138,6 +138,18 @@ export function UserDetail() {
         </div>
       </Section>
 
+      <Section title={t('pomodoro30d')}>
+        <div className="grid">
+          {/* Totals only, and the omission is the design. A list of session timestamps would be a
+              minute-by-minute record of when this person was at their desk — the same reason task
+              titles are absent from this page. */}
+          <Stat label={t('focusTimePlain')} value={user.pomodoro30d.focusMinutes} format="minutes" />
+          <Stat label={t('sessionsCompletedPlain')} value={user.pomodoro30d.sessionsCompleted} />
+          <Stat label={t('sessionsStartedPlain')} value={user.pomodoro30d.sessionsStarted} />
+          <Stat label={t('runsPlain')} value={user.pomodoro30d.runs} />
+        </div>
+      </Section>
+
       <Section title={t('memberships')}>
         {user.groups.length === 0 ? (
           <p className="subtle">{t('none')}</p>

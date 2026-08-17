@@ -1,24 +1,34 @@
 import type { ReactNode } from 'react'
 import { useT } from '../i18n'
+import type { TKey } from '../i18n/en'
 
 interface StatProps {
   label: string
   /** `null` means "not measurable yet" and renders differently from a real zero. */
   value: number | string | null
   hint?: string
-  format?: 'number' | 'percent' | 'duration'
+  format?: 'number' | 'percent' | 'duration' | 'minutes'
   tone?: 'default' | 'good' | 'bad' | 'warn'
 }
 
 const numberFormat = new Intl.NumberFormat()
 
-function formatValue(value: number | string, format: StatProps['format']): string {
+function formatValue(value: number | string, format: StatProps['format'], t: (key: TKey) => string): string {
   if (typeof value === 'string') return value
   switch (format) {
     case 'percent':
       return `${(value * 100).toFixed(value < 0.1 ? 1 : 0)}%`
     case 'duration':
       return value < 1000 ? `${Math.round(value)} ms` : `${(value / 1000).toFixed(1)} s`
+    // Distinct from 'duration', which renders milliseconds: feeding minutes to that would print
+    // "420 ms" for seven hours of focus.
+    case 'minutes': {
+      const hours = Math.floor(value / 60)
+      const minutes = Math.round(value % 60)
+      return hours > 0
+        ? `${hours}${t('durationHoursShort')} ${minutes}${t('durationMinutesShort')}`
+        : `${minutes}${t('durationMinutesShort')}`
+    }
     default:
       return numberFormat.format(value)
   }
@@ -50,7 +60,7 @@ export function Stat({ label, value, hint, format = 'number', tone = 'default' }
       ) : (
         <>
           <p className="stat__value" style={toneColor ? { color: toneColor } : undefined}>
-            {formatValue(value, format)}
+            {formatValue(value, format, t)}
           </p>
           {hint && <p className="stat__hint">{hint}</p>}
         </>

@@ -69,6 +69,36 @@ export interface ChatBlock {
   avgServerMs7d: number | null
 }
 
+/**
+ * Focus-session totals.
+ *
+ * Nullable until measurable, like `TasksBlock.completedToday`: pomodoro_sessions shipped empty and
+ * there is nothing to backfill it from — sessions were never persisted anywhere before — so a confident
+ * 0 would read as "nobody focused today" when the truth is "this could not be measured until now".
+ * Expect nulls here until a client release carrying the recorder reaches users.
+ *
+ * `completionRate7d` is **optimistically biased** and must not be presented as plain fact: a session
+ * killed by process death leaves no row at all, so abandonments are systematically undercounted
+ * against completions.
+ */
+export interface PomodoroBlock {
+  focusMinutesToday: number | null
+  focusMinutes7d: number | null
+  sessionsCompleted7d: number | null
+  completionRate7d: number | null
+  uniqueUsers7d: number
+  runs7d: number
+  avgFocusMinutesPerUser7d: number | null
+}
+
+/** Per-user focus totals. Aggregates only — individual session times are never exposed. */
+export interface AdminUserPomodoro {
+  focusMinutes: number
+  sessionsCompleted: number
+  sessionsStarted: number
+  runs: number
+}
+
 export interface ModerationBlock {
   openChatReports: number
   openContentReports: number
@@ -84,6 +114,7 @@ export interface AdminOverview {
   tasks: TasksBlock
   groups: GroupsBlock
   chat: ChatBlock
+  pomodoro: PomodoroBlock
   moderation: ModerationBlock
 }
 
@@ -176,6 +207,8 @@ export interface AdminUserDetail {
   groups: AdminUserGroup[]
   devices: AdminUserDevice[]
   chatUsage30d: AdminUserChatUsage
+  /** Aggregates only. Individual session times are deliberately absent — see the backend KDoc. */
+  pomodoro30d: AdminUserPomodoro
   reportsFiled: number
   reportsAgainst: number
   sessions: { activeRefreshTokens: number; lastRefreshAt: string | null }

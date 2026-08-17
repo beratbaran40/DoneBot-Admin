@@ -61,6 +61,22 @@
   --series-4: #b5651d;
   --series-5: #7a4fcf;
 
+  /*
+   * There is deliberately no --series-6, and this is a measured result rather than an omission.
+   *
+   * Adding a sixth series for pomodoro focus minutes was attempted and rejected. Inside this family's
+   * lightness band (L* 40–51), its chroma floor (C* >= 40) and the only unoccupied hue window
+   * (teal/cyan, 150–235 degrees), NO colour keeps deuteranopia separation at or above what the current
+   * five already accept: the first candidate, #0f7d8c, collapsed to dE 5.3 against --series-2 for a
+   * deuteranope, where the existing worst pair sits at 16.2. An exhaustive search over that region
+   * returned zero passing colours on the light surface. Dark had passing colours, but the best of them
+   * landed at hue 150 — the same green as --series-3, distinct only by number.
+   *
+   * Pomodoro therefore ships as stat tiles without a trend line. The backend still emits the
+   * pomodoroFocusMinutes series, so restoring the chart is one entry in Overview's SERIES array plus a
+   * token — but only alongside a palette that can carry six.
+   */
+
   --grid: rgba(9, 14, 35, 0.08);
 }
 

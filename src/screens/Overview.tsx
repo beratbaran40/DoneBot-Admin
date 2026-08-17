@@ -123,6 +123,28 @@ export function Overview() {
         </div>
       </Section>
 
+      <Section title={t('sectionPomodoro')}>
+        <div className="grid">
+          <Stat label={t('focusTimeToday')} value={data.pomodoro.focusMinutesToday} format="minutes" />
+          <Stat label={t('focusTime7d')} value={data.pomodoro.focusMinutes7d} format="minutes" />
+          <Stat label={t('sessionsCompleted7d')} value={data.pomodoro.sessionsCompleted7d} />
+          {/*
+            No tone on the completion rate, unlike the chat error rate. It is optimistically biased —
+            a session killed by process death leaves no row, so abandonments are undercounted — and a
+            green badge would present a number we know is flattering as a verdict.
+          */}
+          <Stat
+            label={t('sessionCompletionRate')}
+            value={data.pomodoro.completionRate7d}
+            format="percent"
+            hint={t('sessionCompletionRateHint')}
+          />
+          <Stat label={t('pomodoroUsers7d')} value={data.pomodoro.uniqueUsers7d} />
+          <Stat label={t('pomodoroRuns7d')} value={data.pomodoro.runs7d} />
+          <Stat label={t('avgFocusPerUser7d')} value={data.pomodoro.avgFocusMinutesPerUser7d} format="minutes" />
+        </div>
+      </Section>
+
       <Section title={t('sectionChat')}>
         <div className="grid">
           <Stat label={t('chatRequestsToday')} value={data.chat.requestsToday} />
